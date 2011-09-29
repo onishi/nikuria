@@ -80,9 +80,24 @@ Acme::Nikuria - nikuria api
 
   use Acme::Nikuria;
 
-  for my $str (qw/ささみ トンカツ 焼き肉/) {
-      print Acme::Nikuria->call($str);
+  Acme::Nikuria->is_niku($food);
+  Acme::Nikuria->call($food);
+
+=head1 DESCRIPTION
+
+Acme::Nikuria is api determine whether niku (meat) or not.
+
+  use Acme::Nikuria;
+
+  for (qw/ささみ トンカツ 焼き肉/) {
+      print Acme::Nikuria->call($_);
   }
+
+Output as follows.
+
+  ささみは肉じゃないです。刺身です。
+  トンカツは肉じゃないです。唐揚げジャンルです。
+  焼き肉は肉です。自分で焼いてこそ肉です。
 
 =head1 AUTHOR
 
@@ -90,8 +105,13 @@ Yasuhiro Onishi E<lt>yasuhiro.onishi@gmail.comE<gt>
 
 =head1 SEE ALSO
 
-<http://shindanmaker.com/155104>.
-<http://togetter.com/li/193740>.
+=over
+
+=item <http://shindanmaker.com/155104>
+
+=item <http://togetter.com/li/193740>
+
+=back
 
 =head1 LICENSE
 
