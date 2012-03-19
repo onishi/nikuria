@@ -45,13 +45,15 @@ sub _call {
     defined $str or $str = '';
     $str = Encode::decode('utf-8', $str) unless Encode::is_utf8($str);
     for my $ng (sort {length($b) <=> length($a)} keys %$nikujanai) {
-        if ($str =~ $ng) {
-            return (0, $nikujanai->{$ng});
+        if ($str =~ qr/($ng)/) {
+            my $matched = $1;
+            return (0, $nikujanai->{$ng}, $matched);
         }
     }
     for my $ok (sort {length($b) <=> length($a)} keys %$niku) {
-        if ($str =~ $ok) {
-            return (1, $niku->{$ok});
+        if ($str =~ qr/($ok)/) {
+            my $matched = $1;
+            return (1, $niku->{$ok}, $matched);
         }
     }
     return (0, $fallback->[ord(substr($str || '0', 0, 1)) % @$fallback]);
@@ -65,8 +67,8 @@ sub is_niku {
 
 sub call {
     my ($class, $str) = @_;
-    my ($res, $message) = $class->_call($str);
-    sprintf '%s%s。%s', ($str ? $str."は" : '') , ($res ? '肉です' : '肉じゃないです'), $message;
+    my ($res, $message, $matched) = $class->_call($str);
+    sprintf '%s%s。%s', ($matched ? $matched."は" : '') , ($res ? '肉です' : '肉じゃないです'), $message;
 }
 
 1;
