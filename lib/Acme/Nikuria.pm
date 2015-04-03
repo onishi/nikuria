@@ -68,7 +68,7 @@ sub is_niku {
 sub call {
     my ($class, $str) = @_;
     my ($res, $message, $matched) = $class->_call($str);
-    sprintf '%s%s。%s', ($matched ? $matched."は" : '') , ($res ? '肉です' : '肉じゃないです'), $message;
+    sprintf '%s%s。%s', ($matched || $str) . "は", ($res ? '肉です' : '肉じゃないです'), $message;
 }
 
 1;
