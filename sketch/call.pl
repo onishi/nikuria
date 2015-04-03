@@ -10,7 +10,10 @@ use utf8;
 
 binmode STDOUT, ':utf8';
 
-for my $str (qw/ささみ トンカツ トマト煮に入ってる鶏肉 焼き肉 牛丼 大西 cho45 motemen/) {
+my @strs = scalar @ARGV ? @ARGV : qw/ささみ トンカツ トマト煮に入ってる鶏肉 焼き肉 牛丼 大西 cho45 motemen/;
+
+for my $str (@strs) {
+    $str = Encode::decode('utf-8', $str) unless Encode::is_utf8($str);
     say(Acme::Nikuria->call($str));
 }
 
